@@ -20,24 +20,23 @@ the dump's per-layout viewport list is empty for all but the first layouts of R1
 ## AC1009 (n=17 measured)
 
 - files opened: 17/17 (100%)
-- files with exact per-type entity counts: 15/17 (88%)
-- entities matched by count (sum min(ours,AutoCAD) / AutoCAD): 189725/189729 (100.00%)
+- files with exact per-type entity counts: 17/17 (100%)
+- entities matched by count (sum min(ours,AutoCAD) / AutoCAD): 189729/189729 (100.00%)
 - entities matched by handle+type: n/a (R12 has no stored handles, AutoCAD numbers them on load)
 - header exact (all shared variables equal): 16/17 (94%); tables exact: 17/17 (100%); layouts exact: 17/17 (100%)
 
 | type | AutoCAD n | count matched % | handle+type matched % (TEXT/MTEXT/ATTDEF: position+string) | geometry exact % (where checked) |
 |---|---|---|---|---|
-| LINE | 160273 | 100.00 | 5.14 | 0.00 |
+| LINE | 160273 | 100.00 | 5.13 | 0.00 |
 | ARC | 10408 | 100.00 | 0.00 | - |
 | CIRCLE | 2261 | 100.00 | 0.00 | - |
 | POLYLINE | 2009 | 100.00 | 0.20 | - |
 | INSERT | 4131 | 100.00 | 0.44 | 11.11 |
 | TEXT | 2671 | 100.00 | 100.00 | 100.00 |
 | DIMENSION | 545 | 100.00 | 0.00 | - |
-| VIEWPORT | 4 | 0.00 | 0.00 | - |
+| VIEWPORT | 4 | 100.00 | 100.00 | - |
 
 Top failure causes (files affected, example ids):
-1. count mismatch VIEWPORT: 2 files (48243186a9, a4ffcbb99a)
 1. header TEXTSIZE: 1 files (47e78289f2)
 
 ## AC1012 (n=28 measured)
@@ -106,7 +105,7 @@ Top failure causes (files affected, example ids):
 | LINE | 331425 | 99.99 | 99.99 | 100.00 |
 | ARC | 26381 | 100.00 | 100.00 | 100.00 |
 | CIRCLE | 6198 | 100.00 | 100.00 | 100.00 |
-| LWPOLYLINE | 23004 | 100.00 | 100.00 | 99.69 |
+| LWPOLYLINE | 23004 | 100.00 | 100.00 | 100.00 |
 | POLYLINE | 5530 | 100.00 | 100.00 | - |
 | INSERT | 22704 | 99.95 | 99.95 | 99.99 |
 | TEXT | 13043 | 100.00 | 99.98 | 99.98 |
@@ -120,10 +119,10 @@ Top failure causes (files affected, example ids):
 
 Top failure causes (files affected, example ids):
 1. count mismatch INSERT: 2 files (59568cc658, 7c4e9f257c)
-1. count mismatch POINT: 1 files (59568cc658)
-1. count mismatch DIMENSION: 1 files (59568cc658)
-1. count mismatch MTEXT: 1 files (59568cc658)
 1. count mismatch LINE: 1 files (59568cc658)
+1. count mismatch DIMENSION: 1 files (59568cc658)
+1. count mismatch POINT: 1 files (59568cc658)
+1. count mismatch MTEXT: 1 files (59568cc658)
 
 ## AC1018 (n=53 measured)
 
@@ -138,7 +137,7 @@ Top failure causes (files affected, example ids):
 | LINE | 379879 | 100.00 | 100.00 | 100.00 |
 | ARC | 28555 | 100.00 | 100.00 | 100.00 |
 | CIRCLE | 1683 | 100.00 | 100.00 | 100.00 |
-| LWPOLYLINE | 30966 | 100.00 | 100.00 | 99.94 |
+| LWPOLYLINE | 30966 | 100.00 | 100.00 | 100.00 |
 | POLYLINE | 438235 | 100.00 | 100.00 | - |
 | INSERT | 23881 | 100.00 | 100.00 | 100.00 |
 | TEXT | 79181 | 100.00 | 100.00 | 100.00 |
@@ -150,8 +149,8 @@ Top failure causes (files affected, example ids):
 | VIEWPORT | 205 | 100.00 | 100.00 | 100.00 |
 
 Top failure causes (files affected, example ids):
-1. count mismatch MTEXT: 1 files (a749cee6a6)
 1. count mismatch INSERT: 1 files (a749cee6a6)
+1. count mismatch MTEXT: 1 files (a749cee6a6)
 
 ## AC1021 (n=95 measured)
 
@@ -181,9 +180,9 @@ Top failure causes (files affected, example ids):
 Top failure causes (files affected, example ids):
 1. count mismatch INSERT: 7 files (2c48b51825, 1d50908c72, b238d20c6c, bf8afe3e8b)
 1. count mismatch MTEXT: 2 files (2c48b51825, a0b136f7da)
-1. count mismatch DIMENSION: 1 files (2c48b51825)
 1. count mismatch LINE: 1 files (2c48b51825)
 1. count mismatch POINT: 1 files (2c48b51825)
+1. count mismatch DIMENSION: 1 files (2c48b51825)
 
 ## AC1024 (n=95 measured)
 
@@ -198,7 +197,7 @@ Top failure causes (files affected, example ids):
 | LINE | 3015041 | 100.00 | 100.00 | 100.00 |
 | ARC | 478976 | 100.00 | 100.00 | 100.00 |
 | CIRCLE | 24803 | 100.00 | 100.00 | 100.00 |
-| LWPOLYLINE | 224930 | 100.00 | 100.00 | 98.99 |
+| LWPOLYLINE | 224930 | 100.00 | 100.00 | 100.00 |
 | POLYLINE | 6197 | 100.00 | 100.00 | - |
 | INSERT | 209413 | 99.98 | 99.98 | 100.00 |
 | TEXT | 26843 | 100.00 | 99.99 | 99.99 |
@@ -211,9 +210,9 @@ Top failure causes (files affected, example ids):
 | REGION | 741 | 100.00 | 100.00 | - |
 
 Top failure causes (files affected, example ids):
+1. count mismatch LINE: 6 files (09c59d9d55, 58fc17d402, d56be55fa4, 1f392128d6)
 1. count mismatch POINT: 6 files (09c59d9d55, 58fc17d402, d56be55fa4, 1f392128d6)
 1. count mismatch MTEXT: 6 files (09c59d9d55, 58fc17d402, d56be55fa4, 1f392128d6)
-1. count mismatch LINE: 6 files (09c59d9d55, 58fc17d402, d56be55fa4, 1f392128d6)
 1. count mismatch INSERT: 5 files (09c59d9d55, d56be55fa4, 1f392128d6, bb19735538)
 1. count mismatch LWPOLYLINE: 2 files (f05cf43e12, 58fc17d402)
 
@@ -239,23 +238,23 @@ Top failure causes (files affected, example ids):
 | DIMENSION | 11186 | 100.00 | 100.00 | 100.00 |
 | SPLINE | 109813 | 100.00 | 100.00 | 100.00 |
 | ELLIPSE | 67800 | 100.00 | 100.00 | 100.00 |
-| VIEWPORT | 718 | 100.00 | 100.00 | 99.25 |
+| VIEWPORT | 718 | 100.00 | 100.00 | 97.56 |
 | 3DSOLID | 168 | 100.00 | 100.00 | - |
 | REGION | 159 | 100.00 | 100.00 | - |
 
 Top failure causes (files affected, example ids):
 1. count mismatch LWPOLYLINE: 2 files (caa4142eb2, 746deae904)
-1. count mismatch MTEXT: 2 files (46894df5d1, f891a6135e)
 1. count mismatch INSERT: 2 files (46894df5d1, f891a6135e)
-1. count mismatch LINE: 2 files (46894df5d1, f891a6135e)
 1. count mismatch POINT: 2 files (46894df5d1, f891a6135e)
+1. count mismatch LINE: 2 files (46894df5d1, f891a6135e)
+1. count mismatch MTEXT: 2 files (46894df5d1, f891a6135e)
 
 ## AC1032 (n=93 measured)
 
 - files opened: 93/93 (100%)
 - files with exact per-type entity counts: 91/93 (98%)
 - entities matched by count (sum min(ours,AutoCAD) / AutoCAD): 2599606/2600094 (99.98%)
-- entities matched by handle+type: 2598986/2600094 (99.96%)
+- entities matched by handle+type: 2599044/2600094 (99.96%)
 - header exact (all shared variables equal): 93/93 (100%); tables exact: 93/93 (100%); layouts exact: 93/93 (100%)
 
 | type | AutoCAD n | count matched % | handle+type matched % (TEXT/MTEXT/ATTDEF: position+string) | geometry exact % (where checked) |
@@ -263,22 +262,22 @@ Top failure causes (files affected, example ids):
 | LINE | 1784392 | 100.00 | 100.00 | 100.00 |
 | ARC | 177797 | 100.00 | 100.00 | 100.00 |
 | CIRCLE | 19056 | 100.00 | 100.00 | 100.00 |
-| LWPOLYLINE | 116983 | 100.00 | 100.00 | 99.96 |
+| LWPOLYLINE | 116983 | 100.00 | 100.00 | 100.00 |
 | POLYLINE | 4911 | 100.00 | 100.00 | - |
 | INSERT | 110910 | 99.99 | 99.99 | 100.00 |
-| TEXT | 9252 | 100.00 | 98.87 | 98.87 |
+| TEXT | 9252 | 100.00 | 99.49 | 99.49 |
 | MTEXT | 43223 | 99.79 | 99.72 | 99.72 |
 | HATCH | 66510 | 100.00 | 100.00 | 100.00 |
 | DIMENSION | 6146 | 100.00 | 100.00 | 99.95 |
 | SPLINE | 61990 | 100.00 | 100.00 | 100.00 |
 | ELLIPSE | 45030 | 100.00 | 100.00 | 100.00 |
-| VIEWPORT | 547 | 100.00 | 100.00 | 100.00 |
+| VIEWPORT | 547 | 100.00 | 100.00 | 98.53 |
 | REGION | 6 | 100.00 | 100.00 | - |
 
 Top failure causes (files affected, example ids):
+1. count mismatch POINT: 2 files (6e984d14c0, b478330132)
 1. count mismatch MTEXT: 2 files (6e984d14c0, b478330132)
 1. count mismatch LINE: 2 files (6e984d14c0, b478330132)
-1. count mismatch POINT: 2 files (6e984d14c0, b478330132)
 1. count mismatch SOLID: 1 files (6e984d14c0)
 1. count mismatch INSERT: 1 files (b478330132)
 
