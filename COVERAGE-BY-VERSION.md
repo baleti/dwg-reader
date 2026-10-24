@@ -281,3 +281,19 @@ Top failure causes (files affected, example ids):
 1. count mismatch SOLID: 1 files (6e984d14c0)
 1. count mismatch INSERT: 1 files (b478330132)
 
+
+## Robustness census of the remaining sample files (no ground truth)
+
+The 397 files of campaign21/sample.tsv that have no AutoCAD dump (files over 25 MB, up to 150 MB, and files not picked) were opened and fully decoded with campaign21/cov/openall.py on host2 (Model() plus every entity of every block; an exception or a timeout counts as a failure). Count correctness is not checked here, only that the parser opens the file and decodes it without error.
+
+| version | files | opened and fully decoded | entities decoded |
+|---|---|---|---|
+| AC1014 | 1 | 1 | 353154 |
+| AC1015 | 4 | 4 | 3330821 |
+| AC1018 | 2 | 2 | 2988388 |
+| AC1021 | 197 | 197 | 47271332 |
+| AC1024 | 61 | 61 | 14011532 |
+| AC1027 | 25 | 25 | 17787256 |
+| AC1032 | 107 | 107 | 28429279 |
+
+Total 397 of 397 (100%), slowest file 56 s. Together with the 551 compared files, 948 of the 949 sample files are covered; the remaining one is the file whose AutoCAD dump is not valid JSON and was not part of either run.
