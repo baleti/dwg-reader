@@ -1,4 +1,4 @@
-# DWG decode coverage by version, measured against AutoCAD 2026 (2026-10-24)
+# DWG decode coverage by version, measured against AutoCAD 2026 (2026-10-25)
 
 Ground truth: AutoCAD 2026 in the offline VM (dump.json: every entity of every block with handle/type/geometry, tables, layouts, header variables). Sample: stratified
 random pick from campaign21/sample.tsv, up to 40 files per version (all of AC1009/AC1012/AC1014/AC1015 except files over the size cap), files over 25 MB excluded
@@ -81,7 +81,7 @@ Top failure causes (files affected, example ids):
 | INSERT | 49070 | 100.00 | 100.00 | 100.00 |
 | TEXT | 20948 | 100.00 | 99.99 | 99.99 |
 | MTEXT | 6879 | 100.00 | 100.00 | 100.00 |
-| HATCH | 5085 | 100.00 | 100.00 | 99.94 |
+| HATCH | 5085 | 100.00 | 100.00 | 100.00 |
 | DIMENSION | 5895 | 100.00 | 100.00 | - |
 | SPLINE | 360 | 100.00 | 100.00 | 100.00 |
 | ELLIPSE | 288 | 100.00 | 100.00 | 100.00 |
@@ -110,7 +110,7 @@ Top failure causes (files affected, example ids):
 | INSERT | 22704 | 99.95 | 99.95 | 99.99 |
 | TEXT | 13043 | 100.00 | 99.98 | 99.98 |
 | MTEXT | 8382 | 99.94 | 99.18 | 99.18 |
-| HATCH | 6348 | 100.00 | 100.00 | 99.94 |
+| HATCH | 6348 | 100.00 | 100.00 | 100.00 |
 | DIMENSION | 826 | 100.00 | 99.88 | 99.27 |
 | SPLINE | 3329 | 100.00 | 100.00 | 100.00 |
 | ELLIPSE | 5367 | 100.00 | 100.00 | 100.00 |
@@ -202,7 +202,7 @@ Top failure causes (files affected, example ids):
 | INSERT | 209413 | 99.98 | 99.98 | 100.00 |
 | TEXT | 26843 | 100.00 | 99.99 | 99.99 |
 | MTEXT | 51134 | 99.89 | 99.78 | 99.78 |
-| HATCH | 148248 | 100.00 | 100.00 | 99.98 |
+| HATCH | 148248 | 100.00 | 100.00 | 100.00 |
 | DIMENSION | 8600 | 100.00 | 100.00 | 99.99 |
 | SPLINE | 115741 | 100.00 | 100.00 | 100.00 |
 | ELLIPSE | 171175 | 100.00 | 100.00 | 100.00 |
@@ -234,7 +234,7 @@ Top failure causes (files affected, example ids):
 | INSERT | 171047 | 99.99 | 99.99 | 100.00 |
 | TEXT | 13285 | 100.00 | 99.97 | 99.97 |
 | MTEXT | 69671 | 99.99 | 99.92 | 99.92 |
-| HATCH | 136753 | 100.00 | 100.00 | 99.99 |
+| HATCH | 136753 | 100.00 | 100.00 | 100.00 |
 | DIMENSION | 11186 | 100.00 | 100.00 | 100.00 |
 | SPLINE | 109813 | 100.00 | 100.00 | 100.00 |
 | ELLIPSE | 67800 | 100.00 | 100.00 | 100.00 |
@@ -280,7 +280,6 @@ Top failure causes (files affected, example ids):
 1. count mismatch LINE: 2 files (6e984d14c0, b478330132)
 1. count mismatch SOLID: 1 files (6e984d14c0)
 1. count mismatch INSERT: 1 files (b478330132)
-
 
 ## Robustness census of the remaining sample files (no ground truth)
 
