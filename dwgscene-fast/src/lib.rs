@@ -288,8 +288,8 @@ fn flatten_block<'py>(py: Python<'py>, content: &Bound<'py, PyList>, mat: M, hid
         let fallback = |out: &Bound<'py, PyList>| -> PyResult<()> { out.append(idx) };
         let kind: String = match e.get_item("kind")? { Some(k) => k.extract()?, None => { fallback(&out)?; continue; } };
         let kd = kind.as_str();
-        if !matches!(kd, "LINE" | "CIRCLE" | "ARC" | "ELLIPSE" | "LWPOLYLINE" | "POINT" | "SOLID" | "TRACE" | "SPLINE") { fallback(&out)?; continue; }
-        if matches!(kd, "CIRCLE" | "ARC" | "LWPOLYLINE" | "SOLID" | "TRACE") { if let Some(x) = e.get_item("ext")? { let t: Option<Vec<f64>> = x.extract().ok(); if t.as_deref() != Some(&[0.0, 0.0, 1.0][..]) { fallback(&out)?; continue; } } }
+        if !matches!(kd, "LINE" | "CIRCLE" | "ARC" | "ELLIPSE" | "LWPOLYLINE" | "POINT" | "SOLID" | "TRACE" | "SPLINE" | "POLYLINE2D") { fallback(&out)?; continue; }
+        if matches!(kd, "CIRCLE" | "ARC" | "LWPOLYLINE" | "SOLID" | "TRACE" | "POLYLINE2D") { if let Some(x) = e.get_item("ext")? { let t: Option<Vec<f64>> = x.extract().ok(); if t.as_deref() != Some(&[0.0, 0.0, 1.0][..]) { fallback(&out)?; continue; } } }
         let colv = match e.get_item("color")? { Some(c) => c, None => { fallback(&out)?; continue; } };
         let ncol = colv.len()?;
         if ncol > 2 && !colv.get_item(2)?.is_none() && colv.get_item(2)?.is_truthy()? { fallback(&out)?; continue; }   // transparency
@@ -299,6 +299,8 @@ fn flatten_block<'py>(py: Python<'py>, content: &Bound<'py, PyList>, mat: M, hid
             e.get_item("lweight")?.map_or(py.None().into_bound(py), |v| v),
             e.get_item("ltflags")?.map_or(py.None().into_bound(py), |v| v),
             e.get_item("ltype_index")?.map_or(py.None().into_bound(py), |v| v),
+            e.get_item("ltype_handle")?.map_or(py.None().into_bound(py), |v| v),
+            e.get_item("ltype")?.map_or(py.None().into_bound(py), |v| v),
             // linetype by object (ltflags == 3): the LTYPE is found through the entity's own handles, so the entity handle is part of the key
             match e.get_item("ltflags")? { Some(f) if f.extract::<i64>().ok() == Some(3) => e.get_item("handle")?.map_or(py.None().into_bound(py), |v| v), _ => py.None().into_bound(py) },
         ]);
@@ -376,6 +378,22 @@ fn flatten_block<'py>(py: Python<'py>, content: &Bound<'py, PyList>, mat: M, hid
                 let mut f = Vec::with_capacity(pts.len() * 2);
                 for (x, y) in pts { let (a, b) = ap(&mat, x, y); f.push(a); f.push(b); }
                 f
+            }
+            "POLYLINE2D" => {
+                let verts = match e.get_item("verts")? { Some(v) if v.is_truthy()? => v, _ => { fallback(&out)?; continue; } };
+                let mut pts: Vec<(f64, f64)> = Vec::new(); let mut bul: Vec<f64> = Vec::new(); let mut bad = false;
+                for v in verts.iter()? {
+                    let v = v?; let vd = match v.downcast::<PyDict>() { Ok(d) => d.clone(), Err(_) => { bad = true; break; } };
+                    let fl: i64 = match vd.get_item("flags")?.and_then(|x| x.extract().ok()) { Some(f) => f, None => { bad = true; break; } };
+                    if fl & 16 != 0 { continue; }
+                    let p = match fvec(&vd, "p", 2) { Some(p) => p, None => { bad = true; break; } };
+                    let b = match fnum(&vd, "bulge") { Some(b) => b, None => { bad = true; break; } };
+                    if !ok_xy(&p) || !b.is_finite() { bad = true; break; }
+                    pts.push((p[0], p[1])); bul.push(b);
+                }
+                if bad || pts.is_empty() { fallback(&out)?; continue; }
+                let closed = e.get_item("closed")?.map_or(false, |v| v.is_truthy().unwrap_or(false));
+                lwpoly_path(pts, bul, closed, 0.0, mat, None)
             }
             "ELLIPSE" => {
                 let (c, mj, r, a0, a1) = match (fvec(e, "center", 3), fvec(e, "major", 3), fnum(e, "ratio"), fnum(e, "a0"), fnum(e, "a1")) {
