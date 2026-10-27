@@ -48,7 +48,7 @@ def main(a):
                 print(o, a[i + 1], n, 'entities' + (', %d not movable (skipped)' % skipped if skipped else ''))
                 i += 2 if o == '--erase-layer' else 4
             else: print('unknown option', o); return 2
-        open(out, 'wb').write(doc.save()); print('wrote', out)
+        import dwgio; dwgio.safe_save(out, doc.save(), keep_backup=False); print('wrote', out)   # atomic: a crash or a locked target never leaves a torn .dwg
     return 0
 
 

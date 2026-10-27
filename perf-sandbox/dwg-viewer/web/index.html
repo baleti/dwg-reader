@@ -1,0 +1,40 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>dwg-viewer</title>
+<link rel="stylesheet" href="style.css"></head>
+<body>
+<div id="top"><button id="lpToggle" title="show / hide the layer table">Layers</button><b id="fname">dwg-viewer</b><span id="tabs"></span><span class="sp"></span>
+ <label><input type="checkbox" id="lwOn" checked> lineweights</label>
+ <label><input type="checkbox" id="dark"> dark bg</label>
+ <label title="apply the saved model view twist"><input type="checkbox" id="twist" checked> view twist</label>
+ <label>plot style <select id="ctb"><option value="">none (screen)</option></select></label><label class="filebtn" title="preview with a plot style table (.ctb) from your disk"><input type="file" id="ctbFile" accept=".ctb" style="display:none"><button type="button" onclick="$('ctbFile').click()">.ctb...</button></label>
+ <label><input type="checkbox" id="oLines" checked> lines</label><label><input type="checkbox" id="oHatch" checked> hatch</label><label><input type="checkbox" id="oText" checked> text</label>
+ <label>lw x<input type="range" id="lwK" min="0.5" max="4" step="0.1" value="1" style="width:70px"></label>
+ <span id="cats" title="show / hide object categories"></span>
+ <label title="scale all text">text x<input type="range" id="txK" min="0.5" max="3" step="0.05" value="1" style="width:60px"></label>
+ <button id="handBtn" title="pan with the left button (H); middle button or Space also pans">Pan</button>
+ <input id="findBox" type="search" placeholder="find text (Enter = next)" style="width:130px" title="find text in the drawing: Enter jumps to the next match and selects it, Shift+Enter goes back">
+ <button id="measBtn" title="measure distances and areas (M): click points, double click or Enter to finish, Esc clears, right click removes the last point; snaps to vertices, midpoints and intersections">Measure</button>
+ <button id="pngBtn" title="save the current view as a PNG image (overlays such as selection and measuring are included)">PNG</button>
+ <button id="linkBtn" title="copy a link that reopens this layout, view and hidden layers">Link</button>
+ <button id="fit">Fit</button><span id="stat"></span> <span id="xrefBadge" style="display:none;cursor:help"></span></div>
+<div id="main">
+ <div id="layerpanel">
+  <div class="lp-tools">
+   <button id="lbOn" title="toggle On for the selected layers">On/Off</button><button id="lbFrz" title="freeze / thaw selected">Freeze</button><button id="lbLock" title="lock / unlock selected">Lock</button>
+   <button id="lbIso" title="turn off every other layer">Isolate</button><button id="lbOff" title="turn selected layers off">Off sel.</button><button id="lbAllOn" title="turn all layers on and thaw them">All on</button>
+   <button id="lbVp" title="freeze selected layers in the current viewport (click a viewport on the sheet)">VP freeze</button>
+   <select id="vpAnno" title="annotation scale of the current viewport (annotative text)" style="display:none"></select>
+   <button id="lbSelObj" title="select the objects on the selected layers">Select objects</button><button id="lbOfSel" title="select the layers of the selected objects">Layers of sel.</button>
+   <button id="lbInvert">Invert</button><button id="lbReset" title="back to the layer state stored in the file">Reset</button>
+   <button id="lbCsv" title="copy the selected layers (or all shown) as CSV">CSV</button>
+  </div>
+  <div class="lp-filter"><input id="lfilter" placeholder="filter: name or pattern (A-*, ?WALL)">
+   <select id="lfsel"><option value="all">All layers</option><option value="used">Used</option><option value="unused">Unused</option><option value="off">Off</option><option value="frz">Frozen</option><option value="lock">Locked</option><option value="sel">Of selected objects</option></select></div>
+  <div class="lp-states"><select id="lstates"><option value="">layer states...</option></select><button id="lsSave" title="save the current layer state (On/Freeze/Lock/colours/VP freezes) under a name">Save</button><button id="lsRestore" title="restore the selected state">Restore</button><button id="lsDel" title="delete the selected state">Delete</button></div>
+  <div id="ltable" tabindex="0"></div>
+  <div id="lfoot"></div>
+ </div>
+ <div id="cvwrap"><canvas id="cv" tabindex="0"></canvas><div id="msg"></div><pre id="measOut" style="display:none"></pre><div id="help"><b>dwg-viewer controls</b><br>Ctrl+F: find text (Enter next, Shift+Enter previous)<br>M: measure (click points, snaps to vertices, midpoints and intersections, Shift = no snap, double click / Enter finish, Esc clear)<br>Left drag: select (left to right = window, right to left = crossing)<br>Click: pick, Shift+click: add/remove, Ctrl+A: all, Esc: clear<br>Middle/right drag or Space+drag or H: pan; wheel: zoom; F: fit<br>Double click a viewport: open its model window<br>Layers: click / Shift range / Ctrl toggle rows, buttons act on the selection<br>? : show / hide this help</div><div id="info"></div>
+  <div id="sbar"><span id="sel">nothing selected</span><span class="sp"></span><span id="coord"></span></div></div>
+</div>
+<script src="linkstate.js"></script><script src="app.js"></script><script src="select.js"></script><script src="measure.js"></script><script src="snap.js"></script><script src="measuretool.js"></script><script src="findtext.js"></script><script src="layercsv.js"></script><script src="layers.js"></script></body></html>

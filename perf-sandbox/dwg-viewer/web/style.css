@@ -1,0 +1,36 @@
+html,body{margin:0;height:100%;font:12px system-ui,sans-serif;background:#222;color:#ddd}
+#top{height:32px;display:flex;align-items:center;gap:10px;padding:0 10px;background:#333;border-bottom:1px solid #111;white-space:nowrap;overflow:hidden}
+#top .sp,#sbar .sp{flex:1}
+button{background:#444;color:#ddd;border:1px solid #555;border-radius:3px;cursor:pointer;font-size:11px;padding:2px 6px}
+button:hover{background:#505050}button.on{background:#2a6;color:#fff}
+#tabs button{margin-right:3px;padding:3px 8px;font-size:12px}#tabs button.on{background:#2a6;color:#fff}
+#main{display:flex;height:calc(100% - 33px)}
+#cvwrap{position:relative;flex:1;width:0;height:100%}
+#cv{width:100%;height:calc(100% - 22px);display:block;background:#fff;cursor:crosshair;outline:none}
+#sbar{height:22px;display:flex;align-items:center;gap:12px;padding:0 10px;background:#2b2b2b;border-top:1px solid #111;font-size:11px;color:#bbb}
+#msg{position:absolute;left:20px;top:20px;padding:6px 10px;background:#000a;color:#fff;border-radius:4px;display:none}
+#info{position:absolute;right:10px;bottom:32px;max-width:420px;padding:8px 10px;background:#000c;color:#eee;border-radius:4px;display:none;white-space:pre-wrap;font:11px monospace}
+#top label{white-space:nowrap}
+/* layer properties manager */
+#layerpanel{width:610px;display:flex;flex-direction:column;background:#2b2b2b;border-right:1px solid #111;min-width:0}
+#layerpanel.collapsed{display:none}
+.lp-tools{display:flex;flex-wrap:wrap;gap:3px;padding:5px}
+.lp-filter{display:flex;gap:4px;padding:0 5px 5px}.lp-filter input{flex:1;background:#1d1d1d;color:#ddd;border:1px solid #555;border-radius:3px;padding:2px 5px}
+.lp-filter select{background:#333;color:#ddd;border:1px solid #555}
+#ltable{flex:1;overflow:auto;outline:none;font-size:11px}
+.lrow{display:flex;align-items:center;height:21px;border-bottom:1px solid #333;cursor:default}
+.lrow.sel{background:#1d4b7a}.lrow.dim .w-name,.lrow.dim .w-lt,.lrow.dim .w-lw,.lrow.dim .w-desc{opacity:.5}
+.lrow:hover{background:#34404d}.lrow.sel:hover{background:#215a94}
+.lhead{position:sticky;top:0;background:#3a3a3a;font-weight:bold;z-index:2;cursor:pointer}.lhead .sorted{color:#8cf}
+.lc{flex:none;padding:0 3px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.w-sts{width:22px;text-align:center}.w-sts.used{color:#7c9}.w-name{flex:1 1 140px;min-width:100px}.w-chk{width:30px;text-align:center}.w-col{width:34px}
+.w-lt{width:84px}.w-lw{width:72px}.w-tr{width:40px;text-align:center}.w-desc{width:80px}
+.lc input[type=checkbox]{margin:0;vertical-align:middle}
+input[type=color].sw{padding:0;border:1px solid #888;width:22px;height:14px;background:none;vertical-align:middle}input[type=color].sw.ovr{outline:1px solid #fc0}
+#lfoot{padding:3px 6px;font-size:11px;color:#aaa;border-top:1px solid #111}
+body.clean #top,body.clean #layerpanel,body.clean #sbar{display:none}body.clean #cv{height:100%}body.clean #main{height:100%}body.clean #stat{display:none}
+#help{position:absolute;left:20px;top:20px;padding:10px 14px;background:#000d;color:#eee;border-radius:6px;display:none;line-height:1.7;font-size:12px;z-index:5}
+.lp-states{display:flex;gap:4px;padding:0 5px 5px}.lp-states select{flex:1;background:#333;color:#ddd;border:1px solid #555}
+
+#measOut { position: absolute; left: 10px; bottom: 10px; margin: 0; padding: 6px 9px; font: 12px/1.45 ui-monospace, monospace; background: rgba(30,30,30,.88); color: #ffb060; border: 1px solid #ff7a00; border-radius: 4px; pointer-events: none; z-index: 5; }
+#measBtn.on { background: #ff7a00; color: #111; }
