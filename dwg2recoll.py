@@ -27,8 +27,33 @@ def text_of(d):
     return '\n'.join(out)[:MAXCH]
 
 
+def from_db():
+    """text from the facts DB (cadfacts.py) when the file is there and unchanged: no second decode"""
+    import sqlite3
+    st = os.stat(f)
+    db = sqlite3.connect('file:%s?mode=ro' % os.path.expanduser('~/.cache/indexes/cadfacts/facts.db'), uri=True, timeout=30)
+    r = db.execute('SELECT id FROM files WHERE path=? AND size=? AND mtime=? AND kind="dwg" AND status IN ("ok","partial")', (f, st.st_size, int(st.st_mtime))).fetchone()
+    if not r: return None
+    q = lambda sql: [x[0] for x in db.execute(sql, (r[0],))]
+    out = []
+    lay = q('SELECT name FROM dwg_layouts WHERE fid=?')
+    if lay: out.append('Layouts: ' + ', '.join(map(str, lay)))
+    ly = q('SELECT name FROM dwg_layers WHERE fid=?')
+    if ly: out.append('Layers: ' + ', '.join(ly))
+    bl = q('SELECT name FROM dwg_blocks WHERE fid=?')
+    if bl: out.append('Blocks: ' + ', '.join(bl))
+    out += ['Xref: ' + x for x in q('SELECT path FROM dwg_xrefs WHERE fid=?')]
+    out += q('SELECT text FROM dwg_text WHERE fid=?')
+    return '\n'.join(out)[:MAXCH]
+
+
 txt = ''
 try:
+    txt = from_db() or ''
+except Exception:
+    txt = ''
+try:
+  if not txt:
     p = subprocess.run([sys.executable, os.path.join(here, 'dwg2text.py'), '--jsonl', f], capture_output=True, timeout=1100)
     line = p.stdout.decode('utf-8', 'replace').strip().splitlines()
     if line: txt = text_of(json.loads(line[0]))
