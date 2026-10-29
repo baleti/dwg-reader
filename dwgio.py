@@ -35,7 +35,7 @@ def _busy(e):
 
 
 def replace_retry(src, dst, tries=30, delay=0.02, max_delay=0.5, clear_readonly=False, _sleep=time.sleep):
-    """os.replace with backoff on Windows-style sharing violations (about 3 s total at the defaults)"""
+    """os.replace with jittered backoff on Windows-style sharing violations (about 12 s total at the defaults; 12 tries / 3 s was exhausted by 8 concurrent writers on a slow Windows VM)"""
     src, dst = long_path(src), long_path(dst)
     d = delay
     for i in range(tries):
@@ -54,13 +54,26 @@ def replace_retry(src, dst, tries=30, delay=0.02, max_delay=0.5, clear_readonly=
             d = min(d * 2, max_delay)
 
 
+def full_fsync(fd):
+    """fsync that really reaches the disk: on macOS os.fsync only hands the data to the drive, whose cache can still lose it on power
+    failure; F_FULLFSYNC asks the drive to flush. Falls back to os.fsync where it is unavailable (network file systems refuse it)."""
+    if sys.platform == 'darwin':
+        try:
+            import fcntl
+            fcntl.fcntl(fd, fcntl.F_FULLFSYNC)
+            return
+        except (ImportError, AttributeError, OSError):
+            pass
+    os.fsync(fd)
+
+
 def _fsync_dir(path):
     if _WIN:
         return
     try:
         fd = os.open(path or '.', os.O_RDONLY)
         try:
-            os.fsync(fd)
+            full_fsync(fd)
         finally:
             os.close(fd)
     except OSError:
@@ -84,7 +97,7 @@ def atomic_write(path, data, mode=None, encoding='utf-8', newline=None, clear_re
             f.write(data)
             f.flush()
             if fsync:
-                os.fsync(f.fileno())
+                full_fsync(f.fileno())
         if mode is not None:
             os.chmod(tmp, mode)
         elif os.path.exists(long_path(path)):
@@ -123,7 +136,7 @@ def atomic_write_stream(path, writer, clear_readonly=False, fsync=True):
             writer(f)
             f.flush()
             if fsync:
-                os.fsync(f.fileno())
+                full_fsync(f.fileno())
         replace_retry(tmp, path, clear_readonly=clear_readonly)
     except BaseException:
         try:
